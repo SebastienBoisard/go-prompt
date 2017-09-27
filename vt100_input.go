@@ -100,6 +100,8 @@ func (t *VT100Parser) GetWinSize() *WinSize {
 	}
 }
 
+// Ref: https://github.com/jonathanslenders/python-prompt-toolkit/blob/4476b3c28add85c5a8169fbb81ded8c3b845e588/prompt_toolkit/terminal/vt100_input.py
+
 var asciiSequences []*ASCIICode = []*ASCIICode{
 	{Key: Escape, ASCIICode: []byte{0x1b}},
 
@@ -142,10 +144,18 @@ var asciiSequences []*ASCIICode = []*ASCIICode{
 	{Key: Right, ASCIICode: []byte{0x1b, 0x5b, 0x43}},
 	{Key: Left, ASCIICode: []byte{0x1b, 0x5b, 0x44}},
 	{Key: Home, ASCIICode: []byte{0x1b, 0x5b, 0x48}},
-	{Key: Home, ASCIICode: []byte{0x1b, 0x30, 0x48}},
+	{Key: Home, ASCIICode: []byte{0x1b, 0x4f, 0x48}},
 	{Key: End, ASCIICode: []byte{0x1b, 0x5b, 0x46}},
-	{Key: End, ASCIICode: []byte{0x1b, 0x30, 0x46}},
+	{Key: End, ASCIICode: []byte{0x1b, 0x4f, 0x46}},
+/*
+	H=0x48
+	F=0x46
+	'\x1b[H': Keys.Home,
+	'\x1bOH': Keys.Home
 
+	'\x1b[F': Keys.End,
+	'\x1bOF': Keys.End,
+*/
 	{Key: Enter, ASCIICode: []byte{0xa}},
 	{Key: Delete, ASCIICode: []byte{0x1b, 0x5b, 0x33, 0x7e}},
 	{Key: ShiftDelete, ASCIICode: []byte{0x1b, 0x5b, 0x33, 0x3b, 0x32, 0x7e}},
